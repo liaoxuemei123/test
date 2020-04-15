@@ -1,0 +1,47 @@
+<div id="dataTable">
+  <nz-table [nzData]=[{}] [nzFrontPagination]="false" id="table1"  nzBordered>
+    <thead >
+      <tr>
+        <th  class="one" nzWidth="200px" *ngFor="let data of table[0].one">{{data}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr >
+        <td class="one1" *ngFor="let data of table[0].key">{{trialDataDetail[0]?trialDataDetail[0][data]:''}}</td>
+      </tr>
+    </tbody>
+</nz-table>
+<div id="tablewid">
+<nz-table [nzData]=[{}] [nzFrontPagination]="false" id="table2"  nzBordered>
+  <thead >
+    <tr>
+      <th  class="one" nzWidth="120px" >样件编号</th>
+      <th  class="one" nzWidth="90px" *ngFor="let data of arry2,let i = index">
+        <span nz-tooltip [nzTooltipTitle]=" titleTemplate">{{data}}</span>
+        <ng-template #titleTemplate>
+          <a (click)="contrastTable(data)">对比</a>
+        </ng-template>        
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr >
+      <td class="one1" >要求值</td>
+      <td class="one1" *ngFor="let detail1 of arry6">{{detail1?.requirement}}</td>
+    </tr>
+    <tr *ngFor="let detail of arry3;let i=index">
+      <td class="one1" >{{arry5[i]}}</td>
+      <td class="one1" *ngFor="let detail1 of detail">{{detail1?.contentRatio}}</td>
+    </tr>
+  </tbody>
+</nz-table>
+</div><br>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="对比" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
+    <div
+      echarts
+      [options]="options"
+      style="height: 400px;position: relative;"     
+    ></div>
+  </nz-modal>

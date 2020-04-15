@@ -1,0 +1,15 @@
+<div id="dataTable">
+  <nz-table [nzData]=[{}] [nzFrontPagination]="false" id="table1"  nzBordered *ngFor="let data of table">
+    <thead >
+      <tr>
+        <th class="one" nzWidth="200px" *ngFor="let data1 of data.one">{{data1}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let detail of trialDataDetail">
+        <td class="one1" *ngFor="let data1 of data.key">{{detail[data1]}}</td>
+      </tr>
+    </tbody>
+</nz-table>
+
+</div>

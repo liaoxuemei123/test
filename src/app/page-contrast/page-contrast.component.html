@@ -1,0 +1,142 @@
+<app-form-material-db-background></app-form-material-db-background>
+<div>
+  <ul
+    nz-menu
+    nzMode="inline"
+    class="navUl"
+    id="navList"
+    style="position: fixed;width:150px;z-index:999;"
+  >
+    <li
+      nz-menu-item
+      nz-tooltip
+      [nzTitle]="isCollapsed ? 'Navigation One' : ''"
+      *ngFor="let dataList of pageConfiguration"
+      [attr.data-id]="dataList.key"
+      (click)="clickNav(dataList.key)"
+    >
+      <span>{{ dataList.name }}</span>
+    </li>
+  </ul>
+  <div id="con">
+    <div id="he">
+      <span id="mater">材料对比</span>
+      <nz-switch nzSize="small" [ngModel]="true" class="cd"></nz-switch>
+      <span class="ed">编辑模式</span>
+    </div>
+    <div style="float: left;margin-top: 30px;">
+      <nz-table
+        class="borderedTable"
+        nzBordered
+        [nzData]="[{}]"
+        [nzShowPagination]="false"
+      >
+        <thead>
+          <tr>
+            <th id="info">
+              <div id="hide1">材料信息</div>
+              <div id="hide2"></div>
+              <div id="hide3">
+                <label *ngFor="let field of fields">
+                  <label
+                    nz-checkbox
+                    [(nzChecked)]="field.checked"
+                    [(ngModel)]="field.checked"
+                    (ngModelChange)="refreshStatus(field.id, $event)"
+                    [id]="field.id"
+                    >{{ field.value }}</label
+                  >
+                </label>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of StaticTension; let i = index">
+            <td id="posi">
+              <i
+                nz-icon
+                nzType="close"
+                nzTheme="outline"
+                id="i"
+                (click)="del(i)"
+              ></i>
+              <div class="sta">{{ name[i] }}</div>
+              <div class="sta">{{ model[i] }}</div>
+              <div class="sta">{{ manu[i] }}</div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      <div
+        *ngFor="let dataList of pageConfiguration; let i = index"
+        id="js-content"
+      >
+        <nz-table
+          class="borderedTable vertical js-content"
+          nzBordered
+          [id]="[dataList.key]"
+          [nzData]="[{}]"
+          [nzShowPagination]="false"
+          *ngIf="listItemBlank[dataList.key] == true"
+        >
+          <thead>
+            <tr style="width: 143px;">
+              <th id="str">
+                <div>{{ dataList.name }}
+                </div>
+              </th>
+              <th class="cell" *ngFor="let dataDes of dataList.itemDes;let i = index;">
+                <div>
+                  <span nz-tooltip [nzTooltipTitle]="titleTemplate">{{ dataDes }}</span>
+                  <ng-template #titleTemplate>
+                    <a (click)="contrastStaticTension(dataList.item[i],dataDes,dataList.key)">对比</a>
+                  </ng-template>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let data of this[dataList.key]; let i = index"
+              style="width: 143px;"
+            >
+              <td
+                [attr.rowspan]="i === 0 ? this[dataList.key].length : 1"
+                *ngIf="i == 0"
+              >
+                <div></div>
+              </td>
+
+              <td class="table" *ngFor="let item of dataList.item">
+                <div>{{ data[item] }}</div>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+    <div id="add" (click)="showModal()" *ngIf="StaticTension.length<7">
+      <i nz-icon nzType="plus" nzTheme="outline" id="tian"></i>
+      <div id="jia">添加</div>
+    </div>
+
+    <div *ngIf="checkbox" id="xfk" name="checkbox">
+      <i nz-icon nzType="close" nzTheme="outline" id="i" (click)="cac()"></i>
+      <div id="tit">
+        添加材料
+      </div>
+      <nz-cascader
+        [nzOptions]="nzOptions"
+        [(ngModel)]="values"
+        (ngModelChange)="onChanges($event)"
+      ></nz-cascader>
+    </div>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="对比" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
+      <div 
+        echarts
+        [options]="options"
+        style="height: 400px;position: relative;"></div>
+    </nz-modal>

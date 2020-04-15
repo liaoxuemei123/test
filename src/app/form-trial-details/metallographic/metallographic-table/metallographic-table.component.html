@@ -1,0 +1,96 @@
+<div id="dataTable" >
+  <nz-table [nzData]=[{}] [nzFrontPagination]="false" id="table1"  nzBordered>
+    <thead >
+      <tr>
+        <th  class="one" nzWidth="200px" *ngFor="let data of table[0].one">{{data}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr >
+        <td class="one1" *ngFor="let data of table[0].key">{{trialDataDetail[0]?trialDataDetail[0][data]:''}}</td>
+      </tr>
+    </tbody>
+</nz-table><br><br><br><br>
+    <nz-table [nzData]=[{}] [nzFrontPagination]="false" id="table2" nzBordered>
+        <thead>
+          <tr>
+            <th [nzWidth]="table[1].width[i]"  class="one" *ngFor="let data of table[1].one;let i=index">{{data}}</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let data of trialDataDetail" >
+            <td class="one1" *ngFor="let data1 of table[1].key">{{ data[data1]}}</td>
+
+          </tr>
+        </tbody>        
+      </nz-table> 
+</div>
+<div id="dataImport">
+  <button nz-button nzType="primary" (click)="open()" id="drawerBtn">添加数据</button>
+  <nz-drawer
+    [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzWidth]="350"
+    [nzVisible]="visible"
+    nzTitle="添加试验数据"
+    (nzOnClose)="close()"
+
+  >
+    <form nz-form>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="17">
+          <nz-form-item>
+            <nz-form-label>执行标准</nz-form-label>
+            <nz-form-control>
+              <input nz-input [(ngModel)]='postParams.standard' [ngModelOptions]="{standalone: true}" placeholder="please enter " />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="17">
+          <nz-form-item>
+              <nz-form-label>金相组织</nz-form-label>
+              <nz-form-control>
+                <input [(ngModel)]='postParams.structure' [ngModelOptions]="{standalone: true}" nz-input placeholder="please enter " />
+              </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="17">
+            <nz-form-item>
+                <nz-form-label>非金属夹杂</nz-form-label>
+                <nz-form-control>
+                  <input nz-input [(ngModel)]='postParams.nonMetallicInclusionLevel' [ngModelOptions]="{standalone: true}" placeholder="please enter " />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="17">
+            <nz-form-item>
+                <nz-form-label>晶粒度</nz-form-label>
+                <nz-form-control>
+                  <input nz-input [(ngModel)]='postParams.grainSize' [ngModelOptions]="{standalone: true}" placeholder="please enter " />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+  <div nz-row nzGutter="8">
+      <div nz-col nzSpan="17">
+          <nz-form-item>
+              <nz-form-label>脱碳层深度</nz-form-label>
+              <nz-form-control>
+                <input nz-input [(ngModel)]='postParams.depthDecarburization' [ngModelOptions]="{standalone: true}" placeholder="please enter " />
+              </nz-form-control>
+          </nz-form-item>
+      </div>
+  </div>
+    </form>
+    <div class="footer">
+      <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;"><span>取消</span></button>
+      <button type="button" (click)="PostTrialDataDetails();close()" class="ant-btn ant-btn-primary"><span>添加</span></button>
+    </div>
+  </nz-drawer>
+
+</div>

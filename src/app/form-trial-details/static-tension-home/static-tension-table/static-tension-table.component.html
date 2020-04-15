@@ -1,0 +1,48 @@
+<div id="dataTable">
+  <nz-table [nzData]=[{}] 
+   [nzFrontPagination]="false" nzBordered id="ta">
+    <thead >
+      <tr >
+        <th  nzWidth="200px" class="one" *ngFor="let data1 of table1">{{data1}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr >
+        <td class="one1" *ngFor="let data5 of table5">{{trialDataDetail[0]?trialDataDetail[0][data5]:''}}</td>
+      </tr>
+    </tbody>
+</nz-table>
+<div id="tablewid">
+  <nz-table [nzData]=[{}] [nzFrontPagination]="false" id="tableone"  nzBordered>
+      <thead >
+        <tr >
+          <th [nzWidth]="table3[i]" class="one" *ngFor="let data2 of table2;let i = index">
+            <span *ngIf="('sampleCode,direction').indexOf(table4[i]) == -1;else other_content">
+              <span nz-tooltip [nzTooltipTitle]="titleTemplate">{{ data2 }}</span>
+            <ng-template #titleTemplate>
+              <a (click)="contrastTable(table4[i], data2)">对比</a>
+            </ng-template>
+          </span>
+          <ng-template #other_content><span #other_content>{{ data2 }}</span></ng-template>
+           </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let details of trialDataDetails">
+          <td class="one1"  *ngFor="let data4 of table4">{{ details[data4] }}</td>
+        </tr>
+        <tr  *ngFor="let detail of trialDataDetail">
+          <td class="one1"  *ngFor="let data4 of table4">{{ detail[data4] }}</td>
+        </tr>
+      </tbody>
+  </nz-table>
+</div><br>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="对比" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
+    <div
+      echarts
+      [options]="options"
+      style="height: 400px;position: relative;"
+    ></div>
+  </nz-modal>
